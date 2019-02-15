@@ -13,17 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.hops.management.nvidia;
+package io.hops.management.amd;
 
 import io.hops.*;
 
 /**
- * A helper to load the native libnvidia-ml.so.1
+ * A helper to load the native librocm_smi64.so.0.1.0
  */
-public class NvidiaManagementLibrary implements GPUManagementLibrary {
+public class AMDManagementLibrary implements GPUManagementLibrary {
   
   static {
-    System.loadLibrary("hopsnvml");
+    System.loadLibrary("hopsrocm");
   }
   
   @Override

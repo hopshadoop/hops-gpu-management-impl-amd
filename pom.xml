@@ -4,11 +4,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>io.hops.gpu</groupId>
-  <artifactId>hops-gpu-management-impl-nvidia</artifactId>
+  <artifactId>hops-gpu-management-impl-amd</artifactId>
   <version>2.8.2.8-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>hops-gpu-management-impl-nvidia</name>
+  <name>hops-gpu-management-impl-amd</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -100,11 +100,11 @@
                   <arg line="VERBOSE=1"/>
                  </exec>
                 <exec
-                    command="cp classes/libhopsnvml.${lib_ext} classes/libhopsnvml-${project.version}.${lib_ext}" dir="${project.build.directory}" failonerror="true">
+                    command="cp classes/libhopsrocm.${lib_ext} classes/libhopsrocm-${project.version}.${lib_ext}" dir="${project.build.directory}" failonerror="true">
                 </exec>
                 <exec
-                    command="mvn install:install-file -Dfile=target/classes/libhopsnvml.${lib_ext} -DgroupId=io.hops.gpu
-                            -DartifactId=libhopsnvml -Dversion=${project.version} -Dpackaging=${lib_ext} -DlocalRepositoryPath=${settings.localRepository}"
+                    command="mvn install:install-file -Dfile=target/classes/libhopsrocm.${lib_ext} -DgroupId=io.hops.gpu
+                            -DartifactId=libhopsrocm -Dversion=${project.version} -Dpackaging=${lib_ext} -DlocalRepositoryPath=${settings.localRepository}"
                               dir="${project.build.directory}/.." failonerror="true">
                 </exec>
               </target>

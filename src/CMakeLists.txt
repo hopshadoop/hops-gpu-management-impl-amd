@@ -5,21 +5,13 @@ include(JNIFlags.cmake NO_POLICY_SCOPE)
 find_package(JNI REQUIRED)
 INCLUDE_DIRECTORIES(${JNI_INCLUDE_DIRS})
 
-
 include_directories (${CMAKE_SOURCE_DIR}/main/native/gpu/include)
-#if(NOT CUDA_HOME)
-#  message(STATUS "CUDA_HOME was not defined. Set it to Cuda installation dir")
-#endif()
-
-#link_directories(${$ENV{CUDA_HOME}/lib)
 
 SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wformat-security  -Woverloaded-virtual -Wno-unused-parameter -Wno-unused-but-set-variable -Wno-strict-aliasing -Wno-switch -O3 -DDBUG_OFF" )
 
-file(GLOB SOURCE ${CMAKE_SOURCE_DIR}/main/native/gpu/src/nvml.c)
+file(GLOB SOURCE ${CMAKE_SOURCE_DIR}/main/native/gpu/src/rocm.cpp)
 
-add_library(hopsnvml SHARED ${SOURCE})
-
-target_link_libraries(hopsnvml)
+add_library(hopsrocm SHARED ${SOURCE})
 
 function(output_directory TGT DIR)
     SET_TARGET_PROPERTIES(${TGT} PROPERTIES
@@ -31,4 +23,4 @@ function(output_directory TGT DIR)
 endfunction(output_directory TGT DIR)
 
 
-output_directory(hopsnvml ../classes)
+output_directory(hopsrocm ../classes)
