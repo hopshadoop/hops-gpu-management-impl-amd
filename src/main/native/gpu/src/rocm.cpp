@@ -106,10 +106,18 @@ JNIEXPORT jstring JNICALL Java_io_hops_management_amd_AMDManagementLibrary_query
   (JNIEnv * env, jobject obj, jint reportedGPUs) {
 
     std::string available_devices = "";
+    if(reportedGPUs == 0) {
+      return env->NewStringUTF(available_devices.c_str());
+    }
 
     struct stat amd_gpu;
     std::vector<std::string> amd_gpus = get_amd_cards();
+    int numSchedulableGPUs = 0;
     for(std::vector<int>::size_type i = 0; i != amd_gpus.size(); i++) {
+
+      if(reportedGPUs == numSchedulableGPUs) {
+        return env->NewStringUTF(available_devices.c_str());
+      }
 
       std::string amd_card_path = glob_helper(amd_gpus[i] + "/card*")[0];
       std::string amd_card_dri_entry = "/dev/dri/" + amd_card_path.substr(amd_card_path.find_last_of("/") + 1);
@@ -124,6 +132,8 @@ JNIEXPORT jstring JNICALL Java_io_hops_management_amd_AMDManagementLibrary_query
 
       available_devices = convert::to_string(available_devices) + convert::to_string(major(amd_gpu.st_rdev)) + ":" + convert::to_string(minor(amd_gpu.st_rdev)) +
        "&" + convert::to_string(major(render_node.st_rdev)) + ":" + convert::to_string(minor(render_node.st_rdev)) + " ";
+
+      numSchedulableGPUs++;
     }
     return env->NewStringUTF(available_devices.c_str());
   }
