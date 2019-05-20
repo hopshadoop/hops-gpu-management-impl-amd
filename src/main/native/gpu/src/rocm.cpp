@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <sys/sysmacros.h>
 #include <inttypes.h>
 #include <glob.h> // glob(), globfree()
 #include <string.h> // memset()
@@ -13,6 +12,10 @@
 #include <string>
 #include <sstream>
 #include <dlfcn.h>
+
+#if !defined(__FreeBSD__) && !defined(__NetBSD__) && !defined(__APPLE__)
+#include <sys/sysmacros.h>
+#endif
 
 namespace convert
 {
